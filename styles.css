@@ -1,0 +1,45 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    font-size: 16px;
+}
+
+header {
+    height: 20vh;
+    background-color: bisque;
+    display: flex;
+    justify-content: center;
+}
+
+h1 {
+    /* border: 1px solid black; */
+    align-self: center;
+    font-size: 3rem;
+}
+
+.container {
+    min-height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+table {
+    /* border: 1px solid black; */
+    width: 60%;
+    border-collapse: collapse;
+
+    margin-bottom: 20rem;
+    letter-spacing: 1px;
+}
+
+th {
+    border: 1px solid black;
+    width: 3rem;
+    padding: 5px 10px;
+}
