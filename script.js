@@ -10,20 +10,31 @@ const myLibrary = [
     author: 'Jamie Delano',
     pages: 250,
     finished: 'no'
+  },
+  {
+    title: 'harry potter',
+    author: 'j.k. rowling',
+    pages: 250,
+    finished: 'no'
   }
 ]
 
 function addBookToTable () {
   const table = document.querySelector('.table')
   myLibrary.forEach((book) => {
-    const tableRow = document.createElement('tr')
-    table.appendChild(tableRow)
+    const tableRows = Array.from(document.querySelectorAll('tr'))
+    const isBook = tableRows.some(row => row.className === book.title)
+    const newTableRow = document.createElement('tr')
     const values = Object.values(book)
-    values.forEach((value) => {
-      const tableData = document.createElement('td')
-      tableData.textContent = value
-      table.appendChild(tableData)
-    })
+    newTableRow.className = book.title
+    table.appendChild(newTableRow)
+    if (isBook === false) {
+      values.forEach((value) => {
+        const newTableData = document.createElement('td')
+        newTableData.textContent = value
+        table.appendChild(newTableData)
+      })
+    }
   })
 }
 
@@ -31,7 +42,7 @@ function Book () {
   this.title = ''
   this.author = ''
   this.pages = 0
-  this.finished = false
+  this.finished = ''
 }
 
 function addBookToLibrary () {
@@ -39,11 +50,6 @@ function addBookToLibrary () {
   book.title = prompt('what is the title')
   book.author = prompt('who is the author')
   book.pages = prompt('how many pages?')
-  book.finished = () => {
-    const finished = prompt('have you read it', 'no')
-    if (finished === 'no' || prompt === 'No') {
-      return false
-    } return true
-  }
+  book.finished = prompt('have you finishe it?')
   myLibrary.push(book)
 }
