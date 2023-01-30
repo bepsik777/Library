@@ -4,7 +4,11 @@ const author = document.querySelector('#author')
 const pages = document.querySelector('#pages')
 const unfinished = document.querySelector('#unfinished')
 const finished = document.querySelector('#finished')
+const formModal = document.querySelector('.modal')
+const addBookButton = document.querySelector('.add')
+const closeFormButton = document.querySelector('.closeButton')
 
+console.log(formModal)
 console.log(formSubmitButton)
 
 const myLibrary = [
@@ -69,10 +73,23 @@ function addBookToTable () {
     }
   })
 }
+
+function hideForm () {
+  formModal.classList.add('hidden')
+}
+
+function showForm () {
+  formModal.classList.remove('hidden')
+}
+
 formSubmitButton.addEventListener('click', (e) => {
   e.preventDefault()
   addBookToLibrary()
   addBookToTable()
+  hideForm()
 })
+
+addBookButton.addEventListener('click', showForm)
+closeFormButton.addEventListener('click', hideForm)
 
 addBookToTable()
