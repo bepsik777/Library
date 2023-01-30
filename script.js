@@ -1,23 +1,55 @@
+const formSubmitButton = document.querySelector('.submit')
+const title = document.querySelector('#title')
+const author = document.querySelector('#author')
+const pages = document.querySelector('#pages')
+const unfinished = document.querySelector('#unfinished')
+const finished = document.querySelector('#finished')
+
+console.log(formSubmitButton)
+
 const myLibrary = [
   {
     title: 'Lord of The ring',
     author: 'J.R.R. Tolkien',
     pages: 400,
-    finished: 'no'
+    finished: 'unfinished'
   },
   {
     title: 'Hellblazer',
     author: 'Jamie Delano',
     pages: 250,
-    finished: 'no'
+    finished: 'finished'
   },
   {
     title: 'harry potter',
     author: 'j.k. rowling',
     pages: 250,
-    finished: 'no'
+    finished: 'finished'
   }
 ]
+
+function Book () {
+  this.title = ''
+  this.author = ''
+  this.pages = 0
+  this.finished = ''
+}
+
+function addBookToLibrary () {
+  const book = Object.create(Book)
+  book.title = title.value
+  book.author = author.value
+  book.pages = pages.value
+  function getStatus () {
+    if (unfinished.checked) {
+      book.finished = unfinished.value
+    } else {
+      book.finished = finished.value
+    }
+  }
+  getStatus()
+  myLibrary.push(book)
+}
 
 function addBookToTable () {
   const table = document.querySelector('.table')
@@ -37,19 +69,10 @@ function addBookToTable () {
     }
   })
 }
+formSubmitButton.addEventListener('click', (e) => {
+  e.preventDefault()
+  addBookToLibrary()
+  addBookToTable()
+})
 
-function Book () {
-  this.title = ''
-  this.author = ''
-  this.pages = 0
-  this.finished = ''
-}
-
-function addBookToLibrary () {
-  const book = Object.create(Book)
-  book.title = prompt('what is the title')
-  book.author = prompt('who is the author')
-  book.pages = prompt('how many pages?')
-  book.finished = prompt('have you finishe it?')
-  myLibrary.push(book)
-}
+addBookToTable()
