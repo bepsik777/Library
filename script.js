@@ -39,19 +39,47 @@ function Book () {
   this.finished = ''
 }
 
+// 'THIS' PROBABLY NOT WORKING
+function changeStatus () {
+  if (this.finished.textContent === 'finished') {
+    this.finished.textContent = 'unfinished'
+    this.classList.remove('finished')
+    this.classList.add('unfinished')
+  } else {
+    this.finished.textContent = 'finished'
+    this.classList.remove('unfinished')
+    this.classList.add('finished')
+  }
+}
+
 function addBookToLibrary () {
   const book = Object.create(Book)
+  const statusButton = document.createElement('button')
   book.title = title.value
   book.author = author.value
   book.pages = pages.value
+  book.finished = statusButton
   function getStatus () {
     if (unfinished.checked) {
-      book.finished = unfinished.value
+      book.finished.textContent = unfinished.value
+      book.finished.classList.add('status-button')
     } else {
-      book.finished = finished.value
+      book.finished.textContent = finished.value
+      book.finished.classList.add('status-button')
     }
   }
   getStatus()
+  book.finished.addEventListener('click', (e) => {
+    if (e.target.textContent === 'finished') {
+      e.target.textContent = 'unfinished'
+      e.target.classList.remove('finished')
+      e.target.classList.add('unfinished')
+    } else {
+      e.target.textContent = 'finished'
+      e.target.classList.remove('unfinished')
+      e.target.classList.add('finished')
+    }
+  })
   myLibrary.push(book)
 }
 
@@ -66,9 +94,15 @@ function addBookToTable () {
     table.appendChild(newTableRow)
     if (isBook === false) {
       values.forEach((value) => {
-        const newTableData = document.createElement('td')
-        newTableData.textContent = value
-        table.appendChild(newTableData)
+        if (typeof value !== 'object') {
+          const newTableData = document.createElement('td')
+          newTableData.innerHTML = value
+          table.appendChild(newTableData)
+        } else {
+          const newTableData = document.createElement('td')
+          table.appendChild(newTableData)
+          newTableData.appendChild(value)
+        }
       })
     }
   })
