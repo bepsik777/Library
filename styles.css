@@ -79,6 +79,11 @@ td {
     border: none;
 }
 
+.status-button {
+    width: 4rem;
+    padding: 5px;
+}
+
 .remove-button {
  width: 4rem;
  padding: 5px;

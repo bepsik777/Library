@@ -62,10 +62,12 @@ function addBookToTable () {
     const newTableRow = document.createElement('tr')
     const removeTableData = document.createElement('td')
     const removeButton = document.createElement('button')
+    const statusButton = document.createElement('button')
     const values = Object.values(book)
     removeButton.dataset.index = myLibrary.indexOf(book)
     newTableRow.dataset.index = myLibrary.indexOf(book)
     newTableRow.className = book.title
+    statusButton.className = 'status-button'
     removeTableData.className = 'remove-td'
     removeButton.className = 'remove-button'
     removeButton.textContent = 'Remove'
@@ -73,15 +75,29 @@ function addBookToTable () {
       myLibrary.splice(removeButton.dataset.index, 1)
       removeButton.parentElement.parentElement.remove()
     })
+    statusButton.addEventListener('click', () => {
+      if (book.finished === 'finished') {
+        book.finished = 'unfinished'
+        statusButton.textContent = book.finished
+      } else if (book.finished === 'unfinished') {
+        book.finished = 'finished'
+        statusButton.textContent = book.finished
+      }
+    })
     // check if there is no duplicated book in the table
     if (isBook === false) {
       table.appendChild(newTableRow)
       values.forEach((value) => {
         const newTableData = document.createElement('td')
+        newTableData.className = value
         newTableData.innerHTML = value
         newTableRow.appendChild(newTableData)
+        if (newTableData.className === 'finished' || newTableData.className === 'unfinished') {
+          newTableData.innerHTML = ''
+          newTableData.appendChild(statusButton)
+          statusButton.textContent = value
+        }
       })
-
       removeTableData.appendChild(removeButton)
       newTableRow.appendChild(removeTableData)
     }
