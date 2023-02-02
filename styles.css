@@ -75,6 +75,24 @@ td {
     padding: 5px 10px;
 }
 
+.remove-td {
+    border: none;
+}
+
+.remove-button {
+ width: 4rem;
+ padding: 5px;
+ margin-left: -1rem;
+ color: #fef2f2;
+ background-color: #ef4444;
+ border: none;
+ border-radius: 5px;
+}
+
+.remove-button:hover {
+    background-color: #b91c1c;
+}
+
 .status-button {
     width: 8rem;
     padding: 5px;

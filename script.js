@@ -55,26 +55,6 @@ function addBookToLibrary () {
   myLibrary.push(book)
 }
 
-// function preventDuplicate () {
-//   const isDuplicate = myLibrary.some(book => book.title === title.value)
-//   if (isDuplicate) {
-//     formSubmitButton.disabled = true
-//   } else {
-//     formSubmitButton.disabled = false
-//   }
-// }
-
-// function addBookToTable () {
-//   myLibrary.forEach((book) => {
-
-//   })
-// }
-
-/*
-1. w funkcji addBookToTable sprawić aby w komórkach z readingStatus pojawiał się guzik oraz żeby dla każdego
-rzędu pojawiała się dodatkowa kolumna z przyciskiem umożliwiającym usunięcie rzędu. (napisać funkcję na nowo?)
-*/
-
 function addBookToTable () {
   myLibrary.forEach((book) => {
     const tableRows = Array.from(document.querySelectorAll('tr'))
@@ -88,7 +68,7 @@ function addBookToTable () {
     newTableRow.className = book.title
     removeTableData.className = 'remove-td'
     removeButton.className = 'remove-button'
-    removeButton.textContent = 'delete'
+    removeButton.textContent = 'Remove'
     removeButton.addEventListener('click', () => {
       myLibrary.splice(removeButton.dataset.index, 1)
       removeButton.parentElement.parentElement.remove()
