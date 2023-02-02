@@ -28,8 +28,8 @@ const myLibrary = [
     finished: 'unfinished'
   },
   {
-    title: 'harry potter',
-    author: 'j.k. rowling',
+    title: 'Harry Potter',
+    author: 'J.K. Rowling',
     pages: 250,
     finished: 'finished'
   }
@@ -73,7 +73,6 @@ function addBookToLibrary () {
 /*
 1. w funkcji addBookToTable sprawić aby w komórkach z readingStatus pojawiał się guzik oraz żeby dla każdego
 rzędu pojawiała się dodatkowa kolumna z przyciskiem umożliwiającym usunięcie rzędu. (napisać funkcję na nowo?)
-2. Zablokować w funkcji addToLibrary możliwość dodawania książek o o tytułach które się powtarzają
 */
 
 function addBookToTable () {
@@ -81,22 +80,30 @@ function addBookToTable () {
     const tableRows = Array.from(document.querySelectorAll('tr'))
     const isBook = tableRows.some(row => row.className === book.title)
     const newTableRow = document.createElement('tr')
+    const removeTableData = document.createElement('td')
+    const removeButton = document.createElement('button')
+    const values = Object.values(book)
+    removeButton.dataset.index = myLibrary.indexOf(book)
     newTableRow.dataset.index = myLibrary.indexOf(book)
     newTableRow.className = book.title
-    const values = Object.values(book)
-    table.appendChild(newTableRow)
+    removeTableData.className = 'remove-td'
+    removeButton.className = 'remove-button'
+    removeButton.textContent = 'delete'
+    removeButton.addEventListener('click', () => {
+      myLibrary.splice(removeButton.dataset.index, 1)
+      removeButton.parentElement.parentElement.remove()
+    })
+    // check if there is no duplicated book in the table
     if (isBook === false) {
+      table.appendChild(newTableRow)
       values.forEach((value) => {
-        if (typeof value !== 'object') {
-          const newTableData = document.createElement('td')
-          newTableData.innerHTML = value
-          table.appendChild(newTableData)
-        } else {
-          const newTableData = document.createElement('td')
-          table.appendChild(newTableData)
-          newTableData.appendChild(value)
-        }
+        const newTableData = document.createElement('td')
+        newTableData.innerHTML = value
+        newTableRow.appendChild(newTableData)
       })
+
+      removeTableData.appendChild(removeButton)
+      newTableRow.appendChild(removeTableData)
     }
   })
 }
