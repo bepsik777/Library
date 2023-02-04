@@ -128,7 +128,6 @@ td {
     background-color: #d88f28;
     border-radius: 10px;
 
-    border: 1px solid black;
     justify-content: center;
     align-items: center;
     position: relative;
@@ -157,9 +156,13 @@ label {
 
 form > input {
     appearance: none;
-    padding: 5px;
     width: 100%;
     border: 1px solid black;
+}
+
+input[type=text],
+input[type=number] {
+    padding: 5px;
 }
 
 .submit {

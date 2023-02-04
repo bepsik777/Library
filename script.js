@@ -11,9 +11,6 @@ const formModal = document.querySelector('.modal')
 const form = document.querySelector('form')
 const warning = document.createElement('p')
 
-console.log(formModal)
-console.log(formSubmitButton)
-
 const myLibrary = [
   {
     title: 'Lord of The ring',
@@ -64,6 +61,7 @@ function addBookToTable () {
     const removeButton = document.createElement('button')
     const statusButton = document.createElement('button')
     const values = Object.values(book)
+
     removeButton.dataset.index = myLibrary.indexOf(book)
     newTableRow.dataset.index = myLibrary.indexOf(book)
     newTableRow.className = book.title
@@ -71,10 +69,14 @@ function addBookToTable () {
     removeTableData.className = 'remove-td'
     removeButton.className = 'remove-button'
     removeButton.textContent = 'Remove'
+
+    // Button that removes book from library and from the table
     removeButton.addEventListener('click', () => {
       myLibrary.splice(removeButton.dataset.index, 1)
       removeButton.parentElement.parentElement.remove()
     })
+
+    // add functionality to status button: change the status in the book object and text content of the button
     statusButton.addEventListener('click', () => {
       if (book.finished === 'finished') {
         book.finished = 'unfinished'
@@ -84,6 +86,7 @@ function addBookToTable () {
         statusButton.textContent = book.finished
       }
     })
+
     // check if there is no duplicated book in the table
     if (isBook === false) {
       table.appendChild(newTableRow)
@@ -115,6 +118,7 @@ function showForm () {
 formSubmitButton.addEventListener('click', (e) => {
   e.preventDefault()
   const isDuplicate = myLibrary.some(book => book.title === title.value)
+  // check for duplicates. if they are any, disable submit button and show a warning
   if (isDuplicate) {
     warning.className = 'duplicate-warning'
     warning.textContent = 'There is already a book with the same title in the library'
