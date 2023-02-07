@@ -13,7 +13,7 @@ const warning = document.createElement('p')
 
 const myLibrary = [
   {
-    title: 'Lord of The ring',
+    title: 'Lord Of The ring',
     author: 'J.R.R. Tolkien',
     pages: 400,
     finished: 'finished'
@@ -81,9 +81,11 @@ function addBookToTable () {
       if (book.finished === 'finished') {
         book.finished = 'unfinished'
         statusButton.textContent = book.finished
+        statusButton.classList.remove('finished-button')
       } else if (book.finished === 'unfinished') {
         book.finished = 'finished'
         statusButton.textContent = book.finished
+        statusButton.classList.add('finished-button')
       }
     })
 
@@ -104,6 +106,11 @@ function addBookToTable () {
       removeTableData.appendChild(removeButton)
       newTableRow.appendChild(removeTableData)
     }
+
+    // Add Styling to the default books in myLibrary
+    myLibrary.forEach(book => {
+      if (statusButton.textContent === 'finished') statusButton.classList.add('finished-button')
+    })
   })
 }
 

@@ -104,6 +104,10 @@ td {
     border: none;
 }
 
+.finished-button {
+    background-color: #16a34a;
+}
+
 .modal {
     width: 100%;
     height: 100%;
