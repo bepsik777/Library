@@ -4,12 +4,11 @@ const closeFormButton = document.querySelector('.closeButton')
 const title = document.querySelector('#title')
 const author = document.querySelector('#author')
 const pages = document.querySelector('#pages')
-const unfinished = document.querySelector('#unfinished')
-const finished = document.querySelector('#finished')
 const table = document.querySelector('.table')
 const formModal = document.querySelector('.modal')
 const form = document.querySelector('form')
 const warning = document.createElement('p')
+const removeButtonArray = []
 
 const myLibrary = [
   {
@@ -40,15 +39,11 @@ function Book (title, author, pages, status) {
 }
 
 function addBookToLibrary () {
-  const book = Object.create(Book)
-  book.title = title.value
-  book.author = author.value
-  book.pages = pages.value
-  if (finished.checked) {
-    book.finished = finished.value
-  } else {
-    book.finished = unfinished.value
-  }
+  const bookTitle = title.value
+  const bookAuthor = author.value
+  const bookPages = pages.value
+  const bookStatus = document.querySelector('input[name="status"]:checked').value
+  const book = new Book(bookTitle, bookAuthor, bookPages, bookStatus)
   myLibrary.push(book)
 }
 
@@ -56,41 +51,47 @@ function addBookToTable () {
   myLibrary.forEach((book) => {
     const tableRows = Array.from(document.querySelectorAll('tr'))
     const isBook = tableRows.some(row => row.className === book.title)
-    const newTableRow = document.createElement('tr')
-    const removeTableData = document.createElement('td')
-    const removeButton = document.createElement('button')
-    const statusButton = document.createElement('button')
-    const values = Object.values(book)
-
-    removeButton.dataset.index = myLibrary.indexOf(book)
-    newTableRow.dataset.index = myLibrary.indexOf(book)
-    newTableRow.className = book.title
-    statusButton.className = 'status-button'
-    removeTableData.className = 'remove-td'
-    removeButton.className = 'remove-button'
-    removeButton.textContent = 'Remove'
-
-    // Button that removes book from library and from the table
-    removeButton.addEventListener('click', () => {
-      myLibrary.splice(removeButton.dataset.index, 1)
-      removeButton.parentElement.parentElement.remove()
-    })
-
-    // add functionality to status button: change the status in the book object and text content of the button
-    statusButton.addEventListener('click', () => {
-      if (book.finished === 'finished') {
-        book.finished = 'unfinished'
-        statusButton.textContent = book.finished
-        statusButton.classList.remove('finished-button')
-      } else if (book.finished === 'unfinished') {
-        book.finished = 'finished'
-        statusButton.textContent = book.finished
-        statusButton.classList.add('finished-button')
-      }
-    })
-
-    // check if there is no duplicated book in the table
     if (isBook === false) {
+      const newTableRow = document.createElement('tr')
+      const removeTableData = document.createElement('td')
+      const removeButton = document.createElement('button')
+      removeButtonArray.push(removeButton)
+      const statusButton = document.createElement('button')
+      statusButton.className = 'status-button'
+      const values = Object.values(book)
+
+      removeButton.dataset.index = removeButtonArray.indexOf(removeButton)
+      console.log(removeButton.dataset.index)
+      newTableRow.className = book.title
+      removeTableData.className = 'remove-td'
+      removeButton.className = 'remove-button'
+      removeButton.textContent = 'Remove'
+
+      // Button that removes book from library and from the table
+      removeButton.addEventListener('click', () => {
+        myLibrary.splice(removeButton.dataset.index, 1)
+        removeButtonArray.splice(removeButton.dataset.index, 1)
+        console.log(myLibrary)
+        console.log(removeButtonArray)
+        removeButton.parentElement.parentElement.remove()
+        updateRemoveButtonDataset()
+      })
+
+      // add functionality to status button: change the status in the book object and text content of the button
+      statusButton.addEventListener('click', () => {
+        if (book.finished === 'finished') {
+          book.finished = 'unfinished'
+          statusButton.textContent = book.finished
+          statusButton.classList.remove('finished-button')
+        } else if (book.finished === 'unfinished') {
+          book.finished = 'finished'
+          statusButton.textContent = book.finished
+          statusButton.classList.add('finished-button')
+        }
+      })
+
+      // check if there is no duplicated book in the table
+
       table.appendChild(newTableRow)
       values.forEach((value) => {
         const newTableData = document.createElement('td')
@@ -103,14 +104,20 @@ function addBookToTable () {
           statusButton.textContent = value
         }
       })
-      removeTableData.appendChild(removeButton)
+      removeTableData.appendChild(removeButtonArray[removeButton.dataset.index])
       newTableRow.appendChild(removeTableData)
-    }
 
-    // Add Styling to the default books in myLibrary
-    myLibrary.forEach(book => {
-      if (statusButton.textContent === 'finished') statusButton.classList.add('finished-button')
-    })
+      // Add Styling to the default books in myLibrary
+      myLibrary.forEach(book => {
+        if (statusButton.textContent === 'finished') statusButton.classList.add('finished-button')
+      })
+    }
+  })
+}
+
+function updateRemoveButtonDataset () {
+  removeButtonArray.forEach(button => {
+    button.dataset.index = removeButtonArray.indexOf(button)
   })
 }
 
