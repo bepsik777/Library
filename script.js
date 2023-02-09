@@ -49,6 +49,7 @@ function addBookToLibrary () {
 
 function addBookToTable () {
   myLibrary.forEach((book) => {
+    // Check if there are no duplicated books in the table
     const tableRows = Array.from(document.querySelectorAll('tr'))
     const isBook = tableRows.some(row => row.className === book.title)
     if (isBook === false) {
@@ -61,7 +62,6 @@ function addBookToTable () {
       const values = Object.values(book)
 
       removeButton.dataset.index = removeButtonArray.indexOf(removeButton)
-      console.log(removeButton.dataset.index)
       newTableRow.className = book.title
       removeTableData.className = 'remove-td'
       removeButton.className = 'remove-button'
@@ -71,8 +71,6 @@ function addBookToTable () {
       removeButton.addEventListener('click', () => {
         myLibrary.splice(removeButton.dataset.index, 1)
         removeButtonArray.splice(removeButton.dataset.index, 1)
-        console.log(myLibrary)
-        console.log(removeButtonArray)
         removeButton.parentElement.parentElement.remove()
         updateRemoveButtonDataset()
       })
