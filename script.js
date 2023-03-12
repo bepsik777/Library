@@ -31,17 +31,19 @@ const myLibrary = [
   }
 ]
 
-function Book (title, author, pages, status) {
-  this.title = title
-  this.author = author
-  this.pages = pages
-  this.finished = status
+class Book {
+  constructor (title, author, pages, status) {
+    this.title = title
+    this.author = author
+    this.pages = pages
+    this.finished = status
+  }
 }
 
 function addBookToLibrary () {
   const bookTitle = title.value
   const bookAuthor = author.value
-  const bookPages = pages.value
+  const bookPages = Number(pages.value)
   const bookStatus = document.querySelector('input[name="status"]:checked').value
   const book = new Book(bookTitle, bookAuthor, bookPages, bookStatus)
   myLibrary.push(book)
