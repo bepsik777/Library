@@ -131,6 +131,12 @@ function showForm () {
 
 formSubmitButton.addEventListener('click', (e) => {
   e.preventDefault()
+  const inputArray = [title, author, pages]
+  for (let i = 0; i < inputArray.length; i++) {
+    if (!inputArray[i].checkValidity()) {
+      return
+    }
+  }
   const isDuplicate = myLibrary.some(book => book.title === title.value)
   // check for duplicates. if they are any, disable submit button and show a warning
   if (isDuplicate) {

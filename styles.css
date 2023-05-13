@@ -176,6 +176,11 @@ input[type=number] {
     padding: 5px;
 }
 
+input:invalid {
+    border: 2px solid red;
+    outline: none;
+}
+
 .submit {
     appearance: none;
     width: 100%;
